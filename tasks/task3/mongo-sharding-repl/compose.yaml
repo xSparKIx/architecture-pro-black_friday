@@ -126,13 +126,13 @@ services:
         "shard2",
         "--bind_ip_all",
         "--port",
-        "27018"
+        "27019"
       ]
     networks: [ app-network ]
     volumes:
       - shard2_a-data:/data/db
     healthcheck:
-      test: [ "CMD", "mongosh", "--port", "27018", "--eval", "db.adminCommand('ping')" ]
+      test: [ "CMD", "mongosh", "--port", "27019", "--eval", "db.adminCommand('ping')" ]
       interval: 5s
       start_period: 10s
   shard2_b:
@@ -144,13 +144,13 @@ services:
         "shard2",
         "--bind_ip_all",
         "--port",
-        "27018"
+        "27019"
       ]
     networks: [ app-network ]
     volumes:
       - shard2_b-data:/data/db
     healthcheck:
-      test: [ "CMD", "mongosh", "--port", "27018", "--eval", "db.adminCommand('ping')" ]
+      test: [ "CMD", "mongosh", "--port", "27019", "--eval", "db.adminCommand('ping')" ]
       interval: 5s
       start_period: 10s
   shard2_c:
@@ -162,13 +162,13 @@ services:
         "shard2",
         "--bind_ip_all",
         "--port",
-        "27018"
+        "27019"
       ]
     networks: [ app-network ]
     volumes:
       - shard2_c-data:/data/db
     healthcheck:
-      test: [ "CMD", "mongosh", "--port", "27018", "--eval", "db.adminCommand('ping')" ]
+      test: [ "CMD", "mongosh", "--port", "27019", "--eval", "db.adminCommand('ping')" ]
       interval: 5s
       start_period: 10s
 
@@ -182,13 +182,13 @@ services:
         "shard3",
         "--bind_ip_all",
         "--port",
-        "27018"
+        "27020"
       ]
     networks: [ app-network ]
     volumes:
       - shard3_a-data:/data/db
     healthcheck:
-      test: [ "CMD", "mongosh", "--port", "27018", "--eval", "db.adminCommand('ping')" ]
+      test: [ "CMD", "mongosh", "--port", "27020", "--eval", "db.adminCommand('ping')" ]
       interval: 5s
       start_period: 10s
   shard3_b:
@@ -200,13 +200,13 @@ services:
         "shard3",
         "--bind_ip_all",
         "--port",
-        "27018"
+        "27020"
       ]
     networks: [ app-network ]
     volumes:
       - shard3_b-data:/data/db
     healthcheck:
-      test: [ "CMD", "mongosh", "--port", "27018", "--eval", "db.adminCommand('ping')" ]
+      test: [ "CMD", "mongosh", "--port", "27020", "--eval", "db.adminCommand('ping')" ]
       interval: 5s
       start_period: 10s
   shard3_c:
@@ -218,13 +218,13 @@ services:
         "shard3",
         "--bind_ip_all",
         "--port",
-        "27018"
+        "27020"
       ]
     networks: [ app-network ]
     volumes:
       - shard3_c-data:/data/db
     healthcheck:
-      test: [ "CMD", "mongosh", "--port", "27018", "--eval", "db.adminCommand('ping')" ]
+      test: [ "CMD", "mongosh", "--port", "27020", "--eval", "db.adminCommand('ping')" ]
       interval: 5s
       start_period: 10s
 
@@ -234,7 +234,7 @@ services:
     container_name: mongos_router
     restart: always
     ports:
-      - "27020:27020"
+      - "27021:27021"
     networks:
       app-network:
     depends_on:
@@ -251,10 +251,10 @@ services:
         "config_server/config1:27017,config2:27017,config3:27017",
         "--bind_ip_all",
         "--port",
-        "27020"
+        "27021"
       ]
     healthcheck:
-      test: [ "CMD", "mongosh", "--eval", "db.adminCommand('ping')" ]
+      test: [ "CMD", "mongosh", "--port", "27021", "--eval", "db.adminCommand('ping')" ]
       interval: 5s
       start_period: 10s
   # Приложение
@@ -268,7 +268,7 @@ services:
     ports:
       - 8080:8080
     environment:
-      MONGODB_URL: "mongodb://mongos_router:27020"
+      MONGODB_URL: "mongodb://mongos_router:27021"
       MONGODB_DATABASE_NAME: "somedb"
     networks:
       app-network:
